@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Medicount.Chatbot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.1.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.1-sandbox-diagnostics-20261105+2aff4076935739f8fc21cdc671f9ab2d88e3d160")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.1-sandbox-diagnostics-20261105+cf611282ddc06946653982d65de88ef9becfdf99")]
 [assembly: System.Reflection.AssemblyProductAttribute("Medicount.Chatbot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Medicount.Chatbot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.1.0")]
