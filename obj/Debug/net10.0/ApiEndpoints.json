@@ -1,0 +1,174 @@
+[
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.PagesController",
+    "Method": "Preview",
+    "RelativePath": "",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.ChatApiController",
+    "Method": "ActionRequest",
+    "RelativePath": "api/choose",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.ChatApiController",
+    "Method": "ActionRequest",
+    "RelativePath": "api/event",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.ChatApiController",
+    "Method": "ActionRequest",
+    "RelativePath": "api/form",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.ChatApiController",
+    "Method": "ActionRequest",
+    "RelativePath": "api/keepalive",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.ChatApiController",
+    "Method": "ActionRequest",
+    "RelativePath": "api/message",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.PatientController",
+    "Method": "UpdateInsurance",
+    "RelativePath": "api/Patient/UpdateInsurance",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Medicount.Chatbot.Configuration.InsuranceUpdateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.PatientController",
+    "Method": "VerifyPatient",
+    "RelativePath": "api/Patient/VerifyPatient",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Medicount.Chatbot.Configuration.VerifyIdentityRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.ChatApiController",
+    "Method": "ActionRequest",
+    "RelativePath": "api/prechat",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.ChatApiController",
+    "Method": "Session",
+    "RelativePath": "api/session",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.ChatApiController",
+    "Method": "Status",
+    "RelativePath": "api/status",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.HealthController",
+    "Method": "Health",
+    "RelativePath": "healthz",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.PagesController",
+    "Method": "Preview",
+    "RelativePath": "preview",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.PagesController",
+    "Method": "Preview",
+    "RelativePath": "preview.html",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.PagesController",
+    "Method": "Widget",
+    "RelativePath": "widget",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Medicount.Chatbot.Controllers.PagesController",
+    "Method": "Widget",
+    "RelativePath": "widget.html",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

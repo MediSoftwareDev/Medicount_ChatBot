@@ -1,0 +1,12 @@
+{
+  "welcome": "Hi, I'm the <b>Medicount Billing Assistant</b>. 👋\n\nI can help with questions about an ambulance or EMS bill — payments, balances, insurance, records requests, and more. Please share only the details requested for your billing question.",
+  "prechat": "Before we begin, please share a few details so we can assist you and follow up if the chat disconnects.",
+  "emergency": "🚨 <b>If this is a medical emergency, please call 911 right now or go to the nearest emergency room.</b>\n\nThis chat can only help with billing questions and cannot provide medical help. Please get help immediately.",
+  "agent": "I'm an automated assistant, and this chat doesn't transfer to a live agent. But you're not stuck:\n\n• I can handle most billing requests right here\n• Anything I can't resolve is <b>submitted to our billing team</b>, who respond in writing within 1 business day\n• Or call us at <b>888-410-6986</b>, Monday–Friday, 8:00 AM–5:00 PM Eastern Time\n\nWant to try me first?",
+  "card": "⚠️ <b>Please don't share payment card or bank account numbers in this chat.</b> For your protection, that message has been flagged for restriction and payments are only accepted on our secure payment page.\n\nWould you like me to open the secure page instead?",
+  "verification": "To protect your privacy, I need to <b>verify your identity</b> before sharing anything about an account. I can't confirm whether an account exists until verification succeeds.",
+  "lockout": "I wasn't able to verify your identity after several attempts, so I can't share account details in this chat.\n\nYou can call us at <b>888-410-6986</b>, Monday–Friday, 8:00 AM–5:00 PM Eastern Time, or leave your contact details and our team will reach out to help verify you securely.",
+  "fallback": "I want to make sure I get this right. Did you mean one of these?",
+  "closure": "Is there anything else I can help you with today?",
+  "insuranceUpdate": "Enter your updated <b>insurance information</b> and review it before submitting."
+}

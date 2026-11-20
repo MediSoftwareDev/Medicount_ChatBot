@@ -1,0 +1,40 @@
+{
+  "id": "balance_menu",
+  "title": "Balance & bill",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "I can help with your balance or copies of your bill. What do you need?"
+      ],
+      "event": "flow_selected_balance",
+      "buttons": [
+        {
+          "label": "Check my balance",
+          "target": {
+            "flow": "flow_05_balance"
+          }
+        },
+        {
+          "label": "Get a copy of my bill",
+          "target": {
+            "flow": "flow_06_statement"
+          }
+        },
+        {
+          "label": "Proof of payment / receipt",
+          "target": {
+            "flow": "receipt"
+          }
+        },
+        {
+          "label": "⬅ Main menu",
+          "target": {
+            "flow": "menu"
+          }
+        }
+      ]
+    }
+  }
+}

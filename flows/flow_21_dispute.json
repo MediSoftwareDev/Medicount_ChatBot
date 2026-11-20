@@ -1,0 +1,34 @@
+{
+  "id": "flow_21_dispute",
+  "title": "Amount dispute",
+  "auth": "required",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "I'll open a formal review. Note that I can't change or pause an account myself — but once your dispute is <b>submitted for review</b>, our team examines it and responds in writing within <b>5 business days</b>."
+      ],
+      "form": {
+        "title": "Amount dispute",
+        "fields": [
+          {
+            "id": "field0",
+            "label": "What do you believe is incorrect?",
+            "required": true,
+            "maxLength": 1000
+          },
+          {
+            "id": "field1",
+            "label": "Best contact email",
+            "required": true,
+            "type": "email",
+            "maxLength": 1000
+          }
+        ],
+        "kind": "dispute",
+        "summary": "Amount dispute",
+        "sla": "dispute"
+      }
+    }
+  }
+}

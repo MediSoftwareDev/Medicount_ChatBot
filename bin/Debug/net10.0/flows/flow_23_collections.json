@@ -1,0 +1,28 @@
+{
+  "id": "flow_23_collections",
+  "title": "Collections",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "If your account has been placed with a collection agency, <b>I'm not able to quote a balance or take a payment here</b> — the agency handles the account directly.\n\nI can give you the agency's contact details, or open a review if you believe the placement was in error."
+      ],
+      "tone": "alert",
+      "buttons": [
+        {
+          "label": "Agency contact details",
+          "target": {
+            "flow": "agency"
+          }
+        },
+        {
+          "label": "Open a placement review",
+          "target": {
+            "flow": "placement_review"
+          }
+        }
+      ]
+    }
+  }
+}

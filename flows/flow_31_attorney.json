@@ -1,0 +1,16 @@
+{
+  "id": "flow_31_attorney",
+  "title": "Attorney",
+  "auth": "professional",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "Settlement and reduction requests are handled in writing through <b>ChartSwap</b>. Please submit requests for medical records and/or patient invoices via <a href=\"https://www.chartswap.com\" target=\"_blank\" rel=\"noopener\"><b>www.chartswap.com</b></a>, along with your letter of representation — our team responds through the same channel. I can't discuss any account details here."
+      ],
+      "event": "attorney_chartswap_routed",
+      "endpoint": "PROFESSIONAL_CHARTSWAP",
+      "closure": true
+    }
+  }
+}

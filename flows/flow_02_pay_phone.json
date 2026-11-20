@@ -1,0 +1,41 @@
+{
+  "id": "flow_02_pay_phone",
+  "title": "Pay by phone",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "You can pay through our automated phone payment line:\n\n📞 <b>866-552-5484</b>\n\nIt supports <b>check-by-phone (ACH)</b> payments. A few things to know before you call:\n\n• You must be an <b>authorized signer</b> on the bank account\n• Payments may be drafted from your account as early as today\n• If a check-by-phone payment is returned unpaid, a <b>$25 returned-payment fee</b> (or as allowable by law) applies\n\nYou'll receive a confirmation number at the end — keep it for your records."
+      ],
+      "event": "flow_2_pay_by_phone",
+      "endpoint": "RESOLVED_BY_BOT",
+      "buttons": [
+        {
+          "label": "Pay online instead",
+          "target": {
+            "flow": "flow_01_pay_online"
+          }
+        },
+        {
+          "label": "That answers it",
+          "target": {
+            "flow": "closure"
+          }
+        },
+        {
+          "label": "⬅ Back",
+          "target": {
+            "flow": "payments"
+          }
+        },
+        {
+          "label": "⬅ Main menu",
+          "target": {
+            "flow": "menu"
+          }
+        }
+      ]
+    }
+  }
+}

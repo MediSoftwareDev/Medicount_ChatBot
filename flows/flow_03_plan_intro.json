@@ -1,0 +1,28 @@
+{
+  "id": "flow_03_plan_intro",
+  "title": "Payment plan",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "We may be able to set up a monthly payment plan. The minimum monthly amount is <b>set per account by our payment schedule</b> — your exact minimum will be included in the confirmation.\n\nIf you already have a payment arrangement, our team can review or adjust it through the same request.\n\nTo get started, I'll take a few details and our team will confirm your options in writing within <b>1 business day</b>."
+      ],
+      "event": "flow_3_payment_plan",
+      "buttons": [
+        {
+          "label": "Request a payment plan",
+          "target": {
+            "flow": "flow_03_plan_request"
+          }
+        },
+        {
+          "label": "⬅ Back",
+          "target": {
+            "flow": "payments"
+          }
+        }
+      ]
+    }
+  }
+}

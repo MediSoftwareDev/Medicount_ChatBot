@@ -1,0 +1,36 @@
+{
+  "id": "flow_09_insurance",
+  "title": "Insurance update",
+  "auth": "required",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "form": {
+        "title": "Insurance update",
+        "fields": [
+          {
+            "id": "insuranceCompany",
+            "label": "Insurance company",
+            "required": true,
+            "maxLength": 150
+          },
+          {
+            "id": "memberId",
+            "label": "Member ID",
+            "required": true,
+            "maxLength": 100
+          },
+          {
+            "id": "groupNumber",
+            "label": "Group number (if any)",
+            "required": false,
+            "maxLength": 100
+          }
+        ],
+        "kind": "insurance_update",
+        "summary": "Insurance update",
+        "sla": "general"
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "denial_review",
+  "title": "Denial review & rebill",
+  "auth": "required",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "form": {
+        "title": "Denial review & rebill",
+        "fields": [
+          {
+            "id": "field0",
+            "label": "Best contact email",
+            "required": true,
+            "type": "email",
+            "maxLength": 1000
+          },
+          {
+            "id": "field1",
+            "label": "Phone number",
+            "required": true,
+            "type": "tel",
+            "maxLength": 1000
+          }
+        ],
+        "kind": "denial_review",
+        "summary": "Denial review & rebill",
+        "sla": "general"
+      }
+    }
+  }
+}

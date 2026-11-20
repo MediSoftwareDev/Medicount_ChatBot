@@ -1,0 +1,53 @@
+{
+  "id": "flow_05_balance",
+  "title": "Balance & status",
+  "auth": "required",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "effect": "balance",
+      "event": "balance_lookup",
+      "endpoint": "RESOLVED_BY_BOT",
+      "buttons": [
+        {
+          "label": "Pay this balance",
+          "target": {
+            "flow": "flow_01_pay_online"
+          }
+        },
+        {
+          "label": "Why do I owe this?",
+          "target": {
+            "flow": "flow_05_balance",
+            "state": "why"
+          }
+        },
+        {
+          "label": "⬅ Main menu",
+          "target": {
+            "flow": "menu"
+          }
+        }
+      ]
+    },
+    "why": {
+      "say": [
+        "A balance may include a <b>deductible, coinsurance, or other charges</b>. Your insurer's Explanation of Benefits and your statement can help explain the amount owed.\n\nIf you believe your plan processed it incorrectly, your insurer must reprocess the claim — I can open a review on our side too."
+      ],
+      "buttons": [
+        {
+          "label": "Open a billing review",
+          "target": {
+            "flow": "billing_review"
+          }
+        },
+        {
+          "label": "⬅ Main menu",
+          "target": {
+            "flow": "menu"
+          }
+        }
+      ]
+    }
+  }
+}

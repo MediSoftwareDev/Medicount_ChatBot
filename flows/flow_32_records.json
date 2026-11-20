@@ -1,0 +1,16 @@
+{
+  "id": "flow_32_records",
+  "title": "Records",
+  "auth": "professional",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "Please submit requests for medical records and/or patient invoices via <a href=\"https://www.chartswap.com\" target=\"_blank\" rel=\"noopener\"><b>www.chartswap.com</b></a>.\n\nWhen searching, use the <b>county</b>, then the ambulance service at <b>10361 Spartan Drive</b>, then select the record type you need. Proper authorization is required before anything is released."
+      ],
+      "event": "records_chartswap_routed",
+      "endpoint": "PROFESSIONAL_CHARTSWAP",
+      "closure": true
+    }
+  }
+}

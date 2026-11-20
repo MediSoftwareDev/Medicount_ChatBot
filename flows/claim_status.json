@@ -1,0 +1,14 @@
+{
+  "id": "claim_status",
+  "title": "Claim status",
+  "auth": "required",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "effect": "claim",
+      "event": "claim_status",
+      "endpoint": "RESOLVED_BY_BOT",
+      "closure": true
+    }
+  }
+}

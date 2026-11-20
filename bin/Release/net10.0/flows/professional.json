@@ -1,0 +1,46 @@
+{
+  "id": "professional",
+  "title": "Professional requests",
+  "auth": "professional",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "Welcome. For attorneys, insurers, and records requesters: <b>account details are never shared in this chat.</b> All professional requests go through our verified channels."
+      ],
+      "event": "flow_selected_professional",
+      "buttons": [
+        {
+          "label": "Attorney — settlement / lien",
+          "target": {
+            "flow": "flow_31_attorney"
+          }
+        },
+        {
+          "label": "Medical records request",
+          "target": {
+            "flow": "flow_32_records"
+          }
+        },
+        {
+          "label": "Insurer — verification / W-9",
+          "target": {
+            "flow": "flow_33_payer"
+          }
+        },
+        {
+          "label": "End chat",
+          "target": {
+            "flow": "goodbye"
+          }
+        },
+        {
+          "label": "⬅ Main menu",
+          "target": {
+            "flow": "menu"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "id": "flow_20_wrong_patient",
+  "title": "Not my bill",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "Thank you for flagging that — we take identity concerns seriously. I'll take a short report and our team will investigate. <b>You won't need to verify the account to report this.</b>"
+      ],
+      "form": {
+        "title": "Wrong-patient report",
+        "fields": [
+          {
+            "id": "field0",
+            "label": "Your name",
+            "required": true,
+            "maxLength": 1000
+          },
+          {
+            "id": "field1",
+            "label": "Statement or account number (from the notice you received)",
+            "required": true,
+            "maxLength": 1000
+          },
+          {
+            "id": "field2",
+            "label": "Best contact email",
+            "required": true,
+            "type": "email",
+            "maxLength": 1000
+          }
+        ],
+        "kind": "identity_report",
+        "summary": "Wrong-patient report",
+        "sla": "general"
+      }
+    }
+  }
+}

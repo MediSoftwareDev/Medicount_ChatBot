@@ -1,0 +1,15 @@
+wwwroot\assets\medicount-brand-mark.png
+wwwroot\medicount-chat.css
+wwwroot\medicount-chat.js
+wwwroot\preview.css
+wwwroot\preview.html
+wwwroot\preview.js
+wwwroot\widget.html
+wwwroot\widget.js
+D:\MedicountApplication\Medicoount Git Application\Medicount_Chatbot_Git\wwwroot\medicount-chat.css
+D:\MedicountApplication\Medicoount Git Application\Medicount_Chatbot_Git\wwwroot\medicount-chat.js
+D:\MedicountApplication\Medicoount Git Application\Medicount_Chatbot_Git\wwwroot\preview.css
+D:\MedicountApplication\Medicoount Git Application\Medicount_Chatbot_Git\wwwroot\preview.html
+D:\MedicountApplication\Medicoount Git Application\Medicount_Chatbot_Git\wwwroot\preview.js
+D:\MedicountApplication\Medicoount Git Application\Medicount_Chatbot_Git\wwwroot\widget.html
+D:\MedicountApplication\Medicoount Git Application\Medicount_Chatbot_Git\wwwroot\widget.js

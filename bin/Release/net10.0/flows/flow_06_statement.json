@@ -1,0 +1,61 @@
+{
+  "id": "flow_06_statement",
+  "title": "Bill copy",
+  "auth": "required",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "How would you like to receive your statement copy?"
+      ],
+      "event": "flow_6_bill_copy",
+      "buttons": [
+        {
+          "label": "📧 Email (about 1 business day)",
+          "target": {
+            "flow": "flow_06_statement",
+            "state": "email"
+          }
+        },
+        {
+          "label": "📬 Mail (7–10 business days)",
+          "target": {
+            "flow": "flow_06_statement",
+            "state": "mail"
+          }
+        },
+        {
+          "label": "🧾 Itemized statement (mail)",
+          "target": {
+            "flow": "flow_06_statement",
+            "state": "itemized"
+          }
+        },
+        {
+          "label": "⬅ Main menu",
+          "target": {
+            "flow": "menu"
+          }
+        }
+      ]
+    },
+    "email": {
+      "effect": "statement_email",
+      "event": "statement_email_requested",
+      "endpoint": "SELF_SERVICE_STATEMENT",
+      "closure": true
+    },
+    "mail": {
+      "effect": "statement_mail",
+      "event": "statement_mail_requested",
+      "endpoint": "SELF_SERVICE_STATEMENT",
+      "closure": true
+    },
+    "itemized": {
+      "effect": "statement_itemized",
+      "event": "itemized_statement_requested",
+      "endpoint": "SELF_SERVICE_STATEMENT",
+      "closure": true
+    }
+  }
+}

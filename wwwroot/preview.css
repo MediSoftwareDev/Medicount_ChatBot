@@ -1,0 +1,22 @@
+* { box-sizing:border-box; }
+body { margin:0; background:#fff; color:#333; font:16px/1.6 "Helvetica Neue",Calibri,Arial,sans-serif; }
+header { min-height:100px; border-top:5px solid #00afa9; border-bottom:1px solid #dce0e3; display:flex; align-items:center; justify-content:space-between; padding:12px 7vw; }
+.brand { display:flex; align-items:center; gap:8px; font-size:25px; font-weight:700; color:#5d6770; text-decoration:none; }
+.brand-mark { display:grid; place-items:center; width:72px; padding:9px; background:#fff; }
+.brand-mark img { display:block; width:100%; height:auto; }
+.tag { font-size:11px; letter-spacing:1px; border:1px solid #5d6770; border-radius:20px; padding:7px 13px; color:#5d6770; }
+main { padding:70px 7vw 90px; max-width:850px; }
+.eyebrow { font-size:12px; letter-spacing:2px; color:#5d6770; font-weight:700; }
+h1 { font-family:"AG Book Rounded","AG Book Rounded Std","Helvetica Neue",Calibri,Arial,sans-serif; color:#5d6770; font-size:clamp(38px,5vw,66px); line-height:1.1; letter-spacing:-1px; font-weight:700; margin:18px 0 25px; }
+.intro { font-size:18px; color:#5d6770; max-width:480px; }
+.notice { border-left:4px solid #96c93d; padding:5px 0 5px 18px; max-width:480px; margin-top:33px; }
+.notice p { font-size:15px; color:#5d6770; margin:5px 0; }
+.fixtures { max-width:480px; margin-top:35px; border-top:1px solid #dce0e3; padding-top:16px; }
+.fixtures h2 { font-size:16px; }
+.fixtures dl { display:grid; grid-template-columns:140px 1fr; font-size:14px; gap:12px; }
+.fixtures dt { font-weight:600; }
+.fixtures dd { margin:0; }
+.fixtures p { font-size:14px; color:#5d6770; }
+footer { display:flex; justify-content:space-between; margin:0 7vw; padding:24px 0; border-top:1px solid #dce0e3; color:#5d6770; font-size:12px; }
+:focus-visible { outline:3px solid #5d6770; outline-offset:4px; }
+@media(max-width:600px) { .tag { display:none; } header { min-height:80px; } main { padding-top:40px; } footer { display:block; } footer span { display:block; } }

@@ -1,0 +1,27 @@
+{
+  "id": "flow_15_denial",
+  "title": "Denial/rebill",
+  "auth": "required",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "I'm sorry to hear that. Denials often come down to coverage rules or missing information, and many can be corrected and rebilled.\n\nI can <b>submit your claim for review</b> so our billing team checks the denial reason and rebills if appropriate."
+      ],
+      "buttons": [
+        {
+          "label": "Submit for review",
+          "target": {
+            "flow": "denial_review"
+          }
+        },
+        {
+          "label": "⬅ Main menu",
+          "target": {
+            "flow": "menu"
+          }
+        }
+      ]
+    }
+  }
+}

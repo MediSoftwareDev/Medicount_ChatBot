@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Medicount Billing Assistant</title><link rel="stylesheet" href="./medicount-chat.css"><script src="./widget.js" defer></script></head>
+<body class="mc-widget"><main class="mc-shell" aria-label="Medicount Billing Assistant">
+<header class="mc-header"><span class="mc-mark"><img src="./assets/medicount-brand-mark.png" alt="" width="325" height="346"></span><div class="mc-heading"><h1>Medicount<br>Billing Assistant</h1></div><div class="mc-window-controls"><button id="restart" type="button" aria-label="Restart conversation" title="Restart conversation">↻</button><button id="close" type="button" aria-label="Close chat" title="Close chat">×</button></div><p class="mc-subtitle">Automated assistant · no live agent transfer</p></header>
+<div class="mc-sample" role="note">Account requests require service confirmation</div>
+<div id="stream" class="mc-stream" role="log" aria-label="Conversation" aria-live="polite" aria-relevant="additions"></div>
+<div id="busy" class="mc-busy" role="status" hidden><span></span><span></span><span></span><span class="mc-sr">Assistant is responding</span></div>
+<section id="session-warning" class="mc-session-warning" aria-label="Session time limit" hidden><p id="session-warning-text" role="alert"></p><button id="extend-session" type="button" class="mc-secondary">Keep chatting</button></section>
+<p id="error" class="mc-error" role="alert" hidden></p>
+<form id="composer" class="mc-composer"><label for="message" class="mc-sr">Type your billing question</label><input id="message" name="message" placeholder="Type your billing question…" maxlength="2000" autocomplete="off"><button type="submit" aria-label="Send message">↑</button></form>
+<footer class="mc-footer">Medicount Management, Inc.</footer>
+</main></body></html>
+
+

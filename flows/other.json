@@ -1,0 +1,41 @@
+{
+  "id": "other",
+  "title": "Something else",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "Here are a few other things I can help with — or just type your question below."
+      ],
+      "event": "flow_selected_other",
+      "buttons": [
+        {
+          "label": "🏠 Update my address or phone",
+          "target": {
+            "flow": "flow_26_contact"
+          }
+        },
+        {
+          "label": "🧾 Itemized statement",
+          "target": {
+            "flow": "flow_06_statement",
+            "state": "itemized"
+          }
+        },
+        {
+          "label": "📮 Payment mailing address & fax",
+          "target": {
+            "flow": "mailing"
+          }
+        },
+        {
+          "label": "⬅ Main menu",
+          "target": {
+            "flow": "menu"
+          }
+        }
+      ]
+    }
+  }
+}

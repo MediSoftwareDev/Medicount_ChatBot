@@ -1,0 +1,138 @@
+{
+  "id": "flow_01_pay_online",
+  "title": "Pay online",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "You can pay securely on our hosted payment page. <b>I never collect card numbers in this chat</b> — payments happen only on the secure page.\n\nYou'll need the <b>Secure Health Code</b> shown on your billing statement — it's also on the statement copy attached to your statement email."
+      ],
+      "event": "flow_1_pay_online",
+      "next": "paycard"
+    },
+    "paycard": {
+      "say": [
+        "I'll wait right here while you pay. When you're done, let me know how it went:"
+      ],
+      "linkCard": {
+        "title": "Secure payment",
+        "url": "https://medicount.patientwallet.com/#/",
+        "note": "The payment page opens in a new tab — this chat stays right here and keeps your place. When you finish (or cancel), come back to this tab and tell me the result below."
+      },
+      "buttons": [
+        {
+          "label": "✓ Payment succeeded",
+          "target": {
+            "flow": "flow_01_pay_online",
+            "state": "success"
+          }
+        },
+        {
+          "label": "✗ Payment failed",
+          "target": {
+            "flow": "flow_01_pay_online",
+            "state": "failed"
+          }
+        },
+        {
+          "label": "⏳ Timed out / not sure",
+          "target": {
+            "flow": "flow_01_pay_online",
+            "state": "timeout"
+          }
+        },
+        {
+          "label": "⬅ Main menu",
+          "target": {
+            "flow": "menu"
+          }
+        },
+        {
+          "label": "I can't find my Secure Health Code",
+          "target": {
+            "flow": "flow_01_pay_online",
+            "state": "shc"
+          }
+        }
+      ]
+    },
+    "success": {
+      "say": [
+        "Thank you for letting us know. This chat cannot verify receipt of a payment. Please keep the confirmation from the secure payment page for your records."
+      ],
+      "event": "payment_success_self_reported",
+      "endpoint": "SELF_SERVICE_HOSTED_PAYMENT",
+      "closure": true
+    },
+    "failed": {
+      "say": [
+        "You reported that the payment failed. This chat cannot confirm the payment status. A declined card or an expired session can cause a payment to fail.\n\n<b>Important:</b> if you're unsure whether a charge went through, please don't retry right away — I can open a review so our team confirms no duplicate charge."
+      ],
+      "tone": "alert",
+      "event": "payment_failed_self_reported",
+      "buttons": [
+        {
+          "label": "Try again",
+          "target": {
+            "flow": "flow_01_pay_online",
+            "state": "paycard"
+          }
+        },
+        {
+          "label": "Open a payment review",
+          "target": {
+            "flow": "payment_review"
+          }
+        },
+        {
+          "label": "⬅ Main menu",
+          "target": {
+            "flow": "menu"
+          }
+        }
+      ]
+    },
+    "timeout": {
+      "say": [
+        "I can't confirm whether your payment went through. Please don't try to pay again right away — retrying could create a duplicate charge.\n\nI can open a review so our team confirms the status, or you can check back later."
+      ],
+      "tone": "alert",
+      "event": "payment_timeout_self_reported",
+      "buttons": [
+        {
+          "label": "Open a payment status review",
+          "target": {
+            "flow": "payment_review"
+          }
+        },
+        {
+          "label": "⬅ Main menu",
+          "target": {
+            "flow": "menu"
+          }
+        }
+      ]
+    },
+    "shc": {
+      "say": [
+        "No problem — your <b>Secure Health Code</b> is printed on your billing statement, including the copy attached to your statement email. If you can't find your statement, I can help you request a copy."
+      ],
+      "buttons": [
+        {
+          "label": "Request a bill copy",
+          "target": {
+            "flow": "flow_06_statement"
+          }
+        },
+        {
+          "label": "⬅ Back",
+          "target": {
+            "flow": "flow_01_pay_online",
+            "state": "paycard"
+          }
+        }
+      ]
+    }
+  }
+}

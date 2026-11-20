@@ -1,0 +1,40 @@
+{
+  "id": "disputes",
+  "title": "Dispute or concern",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "I understand — let's get this looked at properly. Tell me which best describes your concern:"
+      ],
+      "event": "flow_21_dispute",
+      "buttons": [
+        {
+          "label": "The amount seems wrong",
+          "target": {
+            "flow": "flow_21_dispute"
+          }
+        },
+        {
+          "label": "This isn't my bill",
+          "target": {
+            "flow": "flow_20_wrong_patient"
+          }
+        },
+        {
+          "label": "I was already sent to collections",
+          "target": {
+            "flow": "flow_23_collections"
+          }
+        },
+        {
+          "label": "⬅ Main menu",
+          "target": {
+            "flow": "menu"
+          }
+        }
+      ]
+    }
+  }
+}

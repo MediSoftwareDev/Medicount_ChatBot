@@ -1,0 +1,49 @@
+{
+  "id": "menu",
+  "title": "Main menu",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "event": "main_menu_shown",
+      "buttons": [
+        {
+          "label": "💳 Pay my bill",
+          "target": {
+            "flow": "payments"
+          }
+        },
+        {
+          "label": "📄 Balance & bill questions",
+          "target": {
+            "flow": "balance_menu"
+          }
+        },
+        {
+          "label": "🛡️ Insurance",
+          "target": {
+            "flow": "insurance_menu"
+          }
+        },
+        {
+          "label": "⚖️ Dispute or concern",
+          "target": {
+            "flow": "disputes"
+          }
+        },
+        {
+          "label": "💼 Attorney / insurer / records",
+          "target": {
+            "flow": "professional"
+          }
+        },
+        {
+          "label": "❓ Something else",
+          "target": {
+            "flow": "other"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "Medicount Chatbot": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "preview",
+      "applicationUrl": "https://localhost",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "APP_ENV": "development",
+        "PUBLIC_ORIGIN": "https://localhost",
+        "PARENT_ORIGINS": "https://localhost",
+        "STORE": "memory",
+        "BILLING_MODE": "disabled",
+        "EMAIL_TRANSPORT": "disabled"
+      }
+    }
+  }
+}

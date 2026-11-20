@@ -1,0 +1,46 @@
+{
+  "id": "payments",
+  "title": "Payments",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "Happy to help with a payment. What would you like to do?"
+      ],
+      "event": "flow_selected_payments",
+      "buttons": [
+        {
+          "label": "Pay online now",
+          "target": {
+            "flow": "flow_01_pay_online"
+          }
+        },
+        {
+          "label": "Pay by phone (automated)",
+          "target": {
+            "flow": "flow_02_pay_phone"
+          }
+        },
+        {
+          "label": "Set up a payment plan",
+          "target": {
+            "flow": "flow_03_plan_intro"
+          }
+        },
+        {
+          "label": "Payment methods & fees",
+          "target": {
+            "flow": "flow_04_methods"
+          }
+        },
+        {
+          "label": "⬅ Main menu",
+          "target": {
+            "flow": "menu"
+          }
+        }
+      ]
+    }
+  }
+}

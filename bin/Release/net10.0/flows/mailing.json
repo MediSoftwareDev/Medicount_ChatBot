@@ -1,0 +1,16 @@
+{
+  "id": "mailing",
+  "title": "Mailing & fax",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "For payments by mail, use the <b>payee address printed on your invoice</b> — that routes your payment correctly for your ambulance service.\n\nOur fax number is <b>513-527-0657</b>."
+      ],
+      "event": "mailing_fax_provided",
+      "endpoint": "RESOLVED_BY_BOT",
+      "closure": true
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "agency",
+  "title": "Agency contact",
+  "auth": "required",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "effect": "agency",
+      "event": "agency_contact_provided",
+      "endpoint": "RESOLVED_BY_BOT",
+      "closure": true
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "id": "flow_33_payer",
+  "title": "Payer verification / W-9",
+  "auth": "professional",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "Payer verification and W-9 requests are handled by our team in writing. I'll take your request details and route it — nothing is confirmed in chat."
+      ],
+      "form": {
+        "title": "Payer verification request",
+        "fields": [
+          {
+            "id": "field0",
+            "label": "Organization name",
+            "required": true,
+            "maxLength": 1000
+          },
+          {
+            "id": "field1",
+            "label": "Callback number on file",
+            "required": true,
+            "type": "tel",
+            "maxLength": 1000
+          },
+          {
+            "id": "field2",
+            "label": "What do you need verified?",
+            "required": true,
+            "maxLength": 1000
+          }
+        ],
+        "kind": "payer_verification",
+        "summary": "Payer verification request",
+        "sla": "general"
+      }
+    }
+  }
+}

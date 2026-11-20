@@ -1,0 +1,16 @@
+{
+  "id": "flow_04_methods",
+  "title": "Methods & fees",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "You can pay by:\n\n• <b>Online</b> — card or bank transfer at <b>medicount.patientwallet.com</b>\n• <b>Phone</b> — automated payment line <b>866-552-5484</b> (check-by-phone/ACH)\n• <b>Mail</b> — check to the payee address printed on your invoice\n\nOur fax number is <b>513-527-0657</b>. Review any card or processing fees on the secure payment page before you confirm, and a returned check-by-phone payment carries a <b>$25 fee</b> (or as allowable by law)."
+      ],
+      "event": "flow_4_methods",
+      "endpoint": "RESOLVED_BY_BOT",
+      "closure": true
+    }
+  }
+}

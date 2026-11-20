@@ -1,0 +1,31 @@
+{
+  "id": "flow_03_plan_request",
+  "title": "Payment plan request",
+  "auth": "required",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "form": {
+        "title": "Payment plan request",
+        "fields": [
+          {
+            "id": "field0",
+            "label": "Preferred monthly amount",
+            "required": true,
+            "maxLength": 1000
+          },
+          {
+            "id": "field1",
+            "label": "Best contact email",
+            "required": true,
+            "type": "email",
+            "maxLength": 1000
+          }
+        ],
+        "kind": "payment_plan",
+        "summary": "Payment plan request",
+        "sla": "general"
+      }
+    }
+  }
+}

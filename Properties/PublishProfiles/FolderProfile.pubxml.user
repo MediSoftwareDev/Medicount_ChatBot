@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>D:\MedicountApplication\MedicountApplication\ChatBot_Version_one\Medicount.Chatbot_IIS_Source\Publish</_PublishTargetUrl>
+    <History>True|2026-11-20T10:54:32.5604209Z||;True|2026-11-20T14:20:39.0697162+05:30||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="ChatDb">
+      <Value>Data Source=10.39.0.12%3bInitial Catalog=MedicountChatbot_Staging%3bUser ID=WebUser%3bPassword=%24t3v3%24uck%24%40%24%24%3bTrustServerCertificate=True%3bConnect Timeout=900%3bEncrypt=True%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

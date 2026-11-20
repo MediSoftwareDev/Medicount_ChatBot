@@ -1,0 +1,40 @@
+{
+  "id": "insurance_menu",
+  "title": "Insurance",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "I can help with insurance on your account. What would you like to do?"
+      ],
+      "event": "flow_selected_insurance",
+      "buttons": [
+        {
+          "label": "Add or update my insurance",
+          "target": {
+            "flow": "flow_09_insurance"
+          }
+        },
+        {
+          "label": "Was my insurance billed?",
+          "target": {
+            "flow": "claim_status"
+          }
+        },
+        {
+          "label": "My claim was denied",
+          "target": {
+            "flow": "flow_15_denial"
+          }
+        },
+        {
+          "label": "⬅ Main menu",
+          "target": {
+            "flow": "menu"
+          }
+        }
+      ]
+    }
+  }
+}

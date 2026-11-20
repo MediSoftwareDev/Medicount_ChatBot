@@ -1,0 +1,27 @@
+{
+  "id": "closure",
+  "title": "Anything else?",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "Is there anything else I can help you with today?"
+      ],
+      "buttons": [
+        {
+          "label": "Yes — back to the menu",
+          "target": {
+            "flow": "menu"
+          }
+        },
+        {
+          "label": "No, that's everything",
+          "target": {
+            "flow": "goodbye"
+          }
+        }
+      ]
+    }
+  }
+}

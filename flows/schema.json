@@ -1,0 +1,216 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "auth": {
+      "enum": [
+        "none",
+        "required",
+        "professional"
+      ]
+    },
+    "entry": {
+      "type": "string",
+      "minLength": 1
+    },
+    "states": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "say": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "tone": {
+            "enum": [
+              "normal",
+              "alert",
+              "good"
+            ]
+          },
+          "buttons": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "target": {
+                  "type": "object",
+                  "properties": {
+                    "flow": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "state": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "flow"
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "label",
+                "target"
+              ]
+            }
+          },
+          "next": {
+            "type": "string",
+            "minLength": 1
+          },
+          "form": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "fields": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 15,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "required": {
+                      "type": "boolean"
+                    },
+                    "type": {
+                      "enum": [
+                        "email",
+                        "tel",
+                        "text"
+                      ]
+                    },
+                    "inputmode": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "mask": {
+                      "const": "dob"
+                    },
+                    "maxLength": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 2000
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "label",
+                    "required"
+                  ]
+                }
+              },
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sla": {
+                "enum": [
+                  "general",
+                  "dispute"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "title",
+              "fields",
+              "kind",
+              "summary"
+            ]
+          },
+          "linkCard": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "title",
+              "url",
+              "note"
+            ]
+          },
+          "effect": {
+            "enum": [
+              "balance",
+              "claim",
+              "statement_email",
+              "statement_mail",
+              "statement_itemized",
+              "agency",
+              "close"
+            ]
+          },
+          "endpoint": {
+            "type": "string",
+            "minLength": 1
+          },
+          "event": {
+            "type": "string",
+            "minLength": 1
+          },
+          "closure": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "auth",
+    "entry",
+    "states"
+  ]
+}

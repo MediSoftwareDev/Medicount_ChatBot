@@ -1,0 +1,39 @@
+{
+  "id": "fallback",
+  "title": "Unrecognized question",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "say": [
+        "I want to make sure I get this right. Did you mean one of these?"
+      ],
+      "buttons": [
+        {
+          "label": "💳 Payments",
+          "target": {
+            "flow": "payments"
+          }
+        },
+        {
+          "label": "📄 Balance & bill",
+          "target": {
+            "flow": "balance_menu"
+          }
+        },
+        {
+          "label": "🛡️ Insurance",
+          "target": {
+            "flow": "insurance_menu"
+          }
+        },
+        {
+          "label": "None of these — submit my question",
+          "target": {
+            "flow": "general_question"
+          }
+        }
+      ]
+    }
+  }
+}

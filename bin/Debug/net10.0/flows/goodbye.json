@@ -1,0 +1,13 @@
+{
+  "id": "goodbye",
+  "title": "Close chat",
+  "auth": "none",
+  "entry": "intro",
+  "states": {
+    "intro": {
+      "effect": "close",
+      "event": "session_closed",
+      "endpoint": "RESOLVED_BY_BOT"
+    }
+  }
+}
