@@ -1,0 +1,81 @@
+SOURCE-COPY NOTICE: The guidance below describes the configured IIS-Publish folder in this handoff. This source project's web.config remains a credential-free template. Deploy IIS-Publish/web.config and preserve it when rebuilding.
+
+DIAGNOSTIC BUILD 1.0.1 - ADDITIONAL VALIDATION
+Release build: 0 warnings, 0 errors. Publish succeeded.
+All previous backend regressions pass, including 259 engine assertions.
+New diagnostic tests: 19 real SQL entry points (no network), 88 correlated flow
+records, privacy, concurrent trace isolation, rotation, disabled logging, sink
+failure resilience, and required-placeholder startup rejection.
+Browser regressions: 18 passed (the original 12 plus six logging/privacy checks).
+Published app: 15 HTTP checks and 7 browser smoke checks passed. A deliberate
+local SQL connection failure returned a reference matching nine server events.
+The configured upload XML was parsed and checked: no required placeholders remain and both upload files contain the same generated secret; no connection to the supplied SQL server was made.
+These supersede the browser count in the earlier baseline results below.
+VALIDATION RESULTS - NOVEMBER 5, 2026
+
+Build and packaging
+- .NET SDK 10.0.403, Windows x64.
+- Release build: succeeded, 0 warnings, 0 errors.
+- Release publish: succeeded; generated IIS web.config and runtime files present.
+- Published application started successfully under local Kestrel.
+- JavaScript syntax checks passed for widget, embed and preview scripts.
+
+Backend regression suite: passed
+- 10 configuration, input-validation and previous-identity clearing checks.
+- 7 service scenarios: direct repository verification; live bridge URL/auth/key;
+  disabled billing; disabled email; accepted mail with failed audit; failed mail
+  retry; one failing outbox item does not block other items.
+- 259 engine assertions, including all 45 configured states and 65 declared
+  buttons across 36 flows. Covered requested-flow continuation, insurance form,
+  review-token tampering, valid/invalid identity, three-attempt lockout, service
+  outage without mismatch attempts, contact fields, payment amounts, cancel,
+  routing, emergency exits, notification outcomes and insurance request keys.
+- Engine successful-verification/insurance tests used fake repositories and
+  billing services, not a live SQL server.
+
+Browser regression suite: 12 passed, 0 failed
+1. Embedded IIS subpath, opening/closing/reopening and Escape.
+2. Required fields, DOB edits, review/edit/confirm and optional inputs.
+3. HTML proxy errors retain the message and support retry.
+4. Enter during an in-flight request avoids duplicates and lost text.
+5. Startup failure and restart recovery.
+6. Verification retry preserves form entries.
+7. Expiry clears entries and ignores a late success response.
+8. Session timing warning and Keep chatting preserve entries.
+9. Approved link labels and unsafe HTML/link rejection.
+10. Mobile keyboard navigation without horizontal overflow.
+11. HTTP 401 clears patient entries and expires the conversation.
+12. Restart cancels old timers; rate-limit errors preserve a usable form.
+These browser regressions use a synthetic API fixture. Mobile layout was also
+visually inspected at 375 x 667.
+
+Published-app smoke checks: passed
+- 15 real HTTP contract/origin/bearer/review/validation checks.
+- 7 real browser checks: prechat review/edit/confirm, five main-menu branches,
+  SQL-unavailable error path, callback cancellation, professional records flow,
+  restart/close/reopen/Escape, and no JavaScript or failed-request errors.
+- Runtime used local Kestrel, memory chat storage, disabled billing/email and
+  deliberately unavailable SQL at loopback port 1. Inputs were synthetic.
+
+Public hosting observations
+- HTTPS /healthz returned 200 on sandbox.medicount.com.
+- /api/status reported billing and email not configured.
+- The provided screenshot shows the original empty Outage message after the
+  insurance verification prompt; that empty message has been corrected.
+- No live patient fields were submitted to the hosted site.
+
+NOT validated in this environment
+- Successful patient matching in the private server's actual SQL procedure.
+- IIS worker identity, SQL TCP/firewall route, certificate trust and SQL grants.
+- Execution of the supplied SQL migrations, live concurrent deduplication or
+  rollback against the actual insurance procedure.
+- Live billing/claims/statements, real SMTP/Graph delivery, or payment processing.
+- Multiple IIS workers or multiple application hosts.
+- All browsers/assistive technology combinations or formal accessibility
+  certification. Runtime browser checks used Microsoft Edge.
+
+The supplied archive lacks the patient-verification procedure and clinical schema.
+The package fixes demonstrated source defects; deployment acceptance must include
+the server-side checks in DEPLOYMENT.txt. It is not a guarantee of defect-free
+operation in every production environment.
+

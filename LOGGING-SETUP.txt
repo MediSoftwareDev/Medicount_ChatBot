@@ -1,0 +1,160 @@
+SOURCE-COPY NOTICE: The guidance below describes the configured IIS-Publish folder in this handoff. This source project's web.config remains a credential-free template. Deploy IIS-Publish/web.config and preserve it when rebuilding.
+
+SANDBOX CONFIGURATION AND DIAGNOSTIC LOGS - BUILD 1.0.1
+
+Files to upload
+Use Medicount.Chatbot.Diagnostics.IIS.zip for the complete rebuilt application.
+The standalone web.config is identical to the configured file in that ZIP.
+Uploading web.config alone enables IIS startup logging on an older build, but
+does NOT add the new application/SQL logging; upload the complete new build.
+Keep the previous release for rollback and preserve server-specific settings.
+
+The supplied SQL connection is already entered in the upload web.config:
+  Server: 10.39.0.12
+  Database: MedicountChatbot_Staging
+  Login: WebUser
+  Password: included only in the configured upload files; not repeated here
+  Encrypt=True; TrustServerCertificate=True (as supplied)
+  Connection timeout: 15 seconds instead of 900
+TrustServerCertificate=True encrypts traffic while bypassing server-certificate
+validation. This is preserved from the supplied configuration.
+The application also caps connection waits at 15 seconds and queries at 30 seconds.
+The source ZIP keeps a credential-free template. Keep the configured web.config
+and IIS ZIP private; both contain the SQL password and persistent hash secret.
+
+ACCOUNT_HASH_SECRET is ready
+A new secret generated from 256 cryptographically random bits is already populated
+identically in the standalone web.config and the configured IIS ZIP. No required
+configuration placeholders remain. Keep this value unchanged across deployments
+and app-pool restarts; retain a protected backup of the completed configuration.
+This secret is separate from the SQL password and must not be shared in chat.
+If replacing an existing deployment, restart open chat conversations after the
+update because review tokens created with the previous secret will no longer match.
+The application deliberately refuses to start while required REPLACE_ placeholders
+remain. Look for configuration.hash_secret / placeholder_not_replaced in its log.
+
+Values to keep unless the deployment changes
+  ASPNETCORE_ENVIRONMENT=Staging
+  APP_ENV=staging
+  PUBLIC_ORIGIN=https://sandbox.medicount.com
+  PARENT_ORIGINS=https://medicounttest.wpenginepowered.com
+  STORE=sql
+  BILLING_MODE=disabled
+  EMAIL_TRANSPORT=disabled
+Enable billing/email only with their actual configured services. They are separate
+from SQL patient verification. See DEPLOYMENT.txt for database setup, especially
+Database/006_insurance_request_idempotency.sql for insurance submissions.
+
+Create the logging directory and grant permission
+Run an elevated PowerShell window on the IIS server. Replace these TWO example
+values with the actual site's physical directory and exact IIS app pool name:
+
+  $chatbotSitePath = 'D:\Sites\MedicountChatbot\releases\fixed-2026-11-05'
+  $chatbotAppPool = 'YOUR_ACTUAL_IIS_APP_POOL_NAME'
+  $chatbotLogPath = Join-Path $chatbotSitePath 'logs'
+  New-Item -ItemType Directory -Path $chatbotLogPath -Force | Out-Null
+  icacls $chatbotLogPath /grant "IIS AppPool\${chatbotAppPool}:(OI)(CI)M"
+
+Grant Modify only on logs; the application files need Read & Execute. If the pool
+runs as a custom domain service account, grant that identity instead. Restrict
+configuration and log access to authorized administrators/service identities.
+Do not place logs in wwwroot. The application refuses that configuration.
+
+Deployment
+1. Preserve the already populated ACCOUNT_HASH_SECRET in the new web.config.
+2. Confirm the SQL database scripts/grants described in DEPLOYMENT.txt are applied.
+3. Stop the sandbox pool, upload the complete rebuilt package to the release
+   directory, confirm the logging permissions above, then start the pool.
+4. Purge the WordPress/CDN script cache and reload the chatbot in a fresh tab.
+5. Reproduce the problem once using a DBA-provided synthetic test patient.
+
+Where to look
+Application: <site directory>\logs\application\application-*.jsonl
+  JSON Lines: one event per line, timestamps in UTC, build=1.0.1.0.
+  Covers startup, each known HTTP route, session/form/conversation processing,
+  SQL connection and query stages, verification outcomes, insurance transaction
+  stages, billing requests, SMTP/Graph, outbox delivery, retries and maintenance.
+  Works independently of SQL, so database outages are still recorded.
+
+IIS startup: <site directory>\logs\startup\stdout_*.log
+  Captures process startup failures and console/stderr. stdoutLogEnabled=true
+  in the supplied file is temporary for troubleshooting. Set it to false after
+  startup is healthy; application logs continue. IIS stdout files do NOT rotate.
+  Do not enable broad IIS module TRACE or HTTP body logging for patient traffic.
+
+Browser: Developer Tools > Console and Network
+  Safe console warnings contain only the action, HTTP status/network_error and
+  a validated trace ID. Responses include X-Trace-Id. Service-outage messages
+  display Reference: <32-character ID>. Normal identity mismatches do not display
+  an operational error reference. Browser developer tools can still show form
+  request bodies; do not share whole HAR files or screenshots containing PHI.
+
+Find all events for the browser's reference
+On the IIS server, replace the path and trace ID below:
+
+  $chatbotLogPath = 'D:\YOUR_SITE_DIRECTORY\logs\application'
+  $chatbotTrace = 'PASTE_THE_32_CHARACTER_REFERENCE'
+  Get-ChildItem -LiteralPath $chatbotLogPath -Filter 'application-*.jsonl' |
+    Get-Content |
+    ConvertFrom-Json |
+    Where-Object { $_.traceId -eq $chatbotTrace } |
+    Select-Object timestampUtc, operation, outcome, elapsedMs, statusCode,
+                  exceptionType, sqlNumber, sqlState, socketError
+
+Read the first failing stage
+  configuration.hash_secret / missing_or_short or placeholder_not_replaced:
+    Supply the persistent hash secret in web.config.
+  startup.configuration / failed:
+    Check mode, origins, store, hash secret and connection-string syntax.
+  startup.flow_catalog / failed:
+    Confirm the complete flows directory was uploaded with the published app.
+  http.origin / rejected:
+    Check PUBLIC_ORIGIN and PARENT_ORIGINS; no path/trailing slash is allowed.
+  sql.store.create.connection_open / failed:
+    Chat session could not reach/authenticate to SQL; inspect sqlNumber/socketError.
+  sql.patient_verification.connection_open / failed:
+    SQL network, credentials, database access or TLS failed before the procedure.
+  sql.patient_verification.query / failed:
+    Connection succeeded; check procedure permissions/contract and query timeout.
+  sql.patient_verification / no_match:
+    Query completed without a matching patient. Check the synthetic record and
+    actual procedure logic with the DBA; this is not a connectivity failure.
+  sql.patient_verification / match:
+    SQL verification succeeded. Inspect later stages if the selected action fails.
+  sql.insurance.* / failed:
+    Check the insurance procedure, required key table, grants and transaction.
+  billing.http / disabled or mail.send / disabled:
+    Expected while the corresponding integration is disabled.
+  DIAGNOSTIC_LOG_WRITE_FAILED in stdout:
+    Check app-pool Modify access to logs and available disk space.
+
+If IIS rejects web.config before the managed application starts, there may be no
+application log or trace ID. Inspect IIS's status/substatus and Event Viewer >
+Windows Logs > Application. Validate XML and the installed .NET 10 Hosting Bundle.
+
+Retention and sensitive data
+Application logs rotate at 10 MiB, retaining up to 14 matching files (roughly
+140 MiB) when the process has delete permission. The limits are configurable:
+  DIAGNOSTICS_MAX_FILE_BYTES=10485760
+  DIAGNOSTICS_MAX_FILES=14
+  DIAGNOSTICS_ENABLED=true
+Logs contain fixed operation/outcome codes, server-generated per-request IDs,
+timings, HTTP status, exception type and numeric SQL/socket error metadata.
+They do not contain names, DOBs, account/member IDs, contact details, chat text,
+form bodies, SQL text/parameters, passwords, connection strings, tokens, session
+IDs, account hashes, raw exception messages/stacks, URLs or query strings.
+Existing application data in SQL is separate from this diagnostic logging.
+
+Validation performed
+Release build and publish passed. Original backend checks passed (259 engine
+assertions plus configuration/service suites). New tests checked 19 SQL entry
+points and 88 flow diagnostic events, privacy, trace correlation, concurrency,
+rotation, disabled mode, and logging failures not changing business results.
+All 18 browser regressions, 15 HTTP checks, and 7 published-app browser smoke
+checks passed. A deliberately unavailable local SQL endpoint produced nine
+correlated safe events and the matching browser reference. XML and unreplaced
+placeholder startup failure were tested. No live private SQL or IIS changes were
+made; successful server-side verification still needs staging acceptance.
+
+Microsoft IIS logging reference:
+https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/logging-and-diagnostics?view=aspnetcore-10.0

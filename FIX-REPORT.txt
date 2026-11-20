@@ -1,0 +1,66 @@
+ADDRESSED DEFECTS
+
+[P1] Remove the localhost verification self-call - Services/BillingApiService.cs
+Hosted requests used https://localhost and an incorrect Origin header. Verification
+now calls PatientVerificationRepository directly on the server.
+
+[P1] Unify the SQL configuration - Configuration/ChatOptions.cs; SQL repositories
+Session storage and patient/form operations could use different servers, TLS
+policies and credentials. They now share canonical ChatDb resolution. Legacy
+SQL_* remains a fallback. Excessive connection/command timeouts are bounded.
+
+[P1] Enable configured live billing - Services/BillingGateway.cs
+The mode check was reversed and rejected live requests. It now rejects disabled
+billing and preserves the configured bridge base path.
+
+[P1] Show service failures and resume the selected action - ConversationEngine.cs
+The blank red outage bubble is corrected. SQL outages do not consume failed-match
+attempts. Successful verification resumes the requested flow instead of forcing
+insurance entry. SQL-only actions remain usable with the HTTP bridge disabled.
+
+[P1] Prevent duplicate insurance writes on chatbot retries - repository; Database/006
+The stable form ID gates the existing insurance procedure within a serializable
+transaction. Matching retries return without another write; changed payloads
+conflict. Requires migration 006 and staging transaction/concurrency validation.
+
+[P1] Honor disabled email and preserve accepted results - Services/MailDelivery.cs
+Disabled transport no longer attempts SMTP. Audit failure no longer turns an
+accepted message into reported failure, and one failed retry does not block the
+remaining outbox. Accepted insurance/form submissions are not reported as lost
+when secondary notification/audit work fails.
+
+[P1] Remove exposed credentials - appsettings.json; staging example
+The original database and mail passwords are excluded from corrected artifacts.
+They need rotation and protected deployment configuration.
+
+[P2] Preserve IIS application paths - wwwroot scripts and HTML; PagesController
+Embedding and API/assets retain the script's application path. The same-host
+preview is allowed by frame-ancestors. Nested-path browser regression added.
+
+[P2] Repair form and session interactions - wwwroot/widget.js
+Fixed duplicate requests, lost text, stale replies after expiry, restart timers,
+retry entries, date editing, focus/keyboard handling, misleading link labels and
+non-JSON hosting errors. SQL requests get a longer bounded browser deadline.
+
+[P2] Correct validation and legacy identity state - configuration; controllers
+Added input length checks, cleared prior identity on failed reverification,
+limited legacy session attempts, rejected blank messages and invalid dates,
+validated conditional contact fields and positive payment amounts, and removed
+the unused identity endpoint that returned an empty success.
+
+[P2] Correct wording and routes - flows; ConversationEngine; Guardrails
+Reviewed user-facing wording, corrected callback/payment/insurance messages,
+removed an unfinished fee placeholder, used Eastern Time consistently, improved
+required/optional labels, and fixed routing priority and 911 substring matching.
+
+[P2] Supply missing setup guidance - Database; DEPLOYMENT.txt
+Added additive form and insurance-key schema scripts, optional exports of the
+original migrations, metadata/permission diagnostics and accurate IIS settings.
+The empty EF migration does not provision these objects. The actual clinical
+verification procedure remains an external prerequisite.
+
+OVERALL ASSESSMENT
+All executed build and automated checks passed; see TEST-RESULTS.txt. The source
+fixes are complete for the demonstrated defects. No deployment or live database
+changes were performed. Server SQL success, migration execution, billing/email
+integration and the IIS acceptance checklist remain environment-specific checks.

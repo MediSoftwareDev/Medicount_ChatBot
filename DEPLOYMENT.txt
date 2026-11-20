@@ -1,0 +1,164 @@
+SOURCE-COPY NOTICE: The guidance below describes the configured IIS-Publish folder in this handoff. This source project's web.config remains a credential-free template. Deploy IIS-Publish/web.config and preserve it when rebuilding.
+
+DIAGNOSTIC BUILD 1.0.1 ADDENDUM
+The configured upload web.config and Diagnostics.IIS.zip now contain the SQL
+connection supplied by the user. The supplied SQL configuration and generated persistent hash secret are already populated; no required placeholders remain. The source ZIP retains the credential-free template. See
+LOGGING-SETUP.txt for log permissions, locations, retention and trace lookup.
+MEDICOUNT CHATBOT - CORRECTED IIS PACKAGE
+Prepared November 5, 2026
+
+What caused the reported failure
+The widget verifies identity through ConversationEngine -> BillingApiService.
+The supplied BillingApiService sent the patient fields to
+https://localhost/api/Patient/VerifyPatient with Origin: https://localhost.
+On the hosted IIS server, localhost is the server itself, not the public chatbot
+binding. This can hit a different site or fail TLS/origin validation. The corrected
+service calls PatientVerificationRepository directly, using SQL on the server.
+
+The empty red box in the supplied screenshot is a separate confirmed defect:
+ConversationEngine.Outage returned Text("", "alert"). It now displays a clear
+service-outage explanation and recovery controls. Infrastructure failures do not
+count as patient identity mismatches.
+
+The original source also resolved SQL in two incompatible ways: ChatDb for
+patient/form repositories, and SQL_* settings for session storage. All SQL
+consumers now prefer ConnectionStrings:ChatDb and fall back to complete SQL_*
+settings only when ChatDb is empty. The supplied credentials were removed.
+
+IIS deployment
+1. Back up the deployed application and current protected server configuration.
+   Keep the previous application package available for rollback. Do not place
+   backups or source ZIPs in wwwroot.
+2. Use a supported Windows server with the .NET 10 Hosting Bundle installed for
+   IIS. The supplied publish archive is framework-dependent; it includes the
+   application, dependencies, flows, static files and generated web.config.
+   Configure the app pool for No Managed Code, a 64-bit worker, and ONE worker
+   process. This application uses process-local session locks. Multiworker/web
+   farm operation needs distributed coordination and is not validated here.
+3. Before replacing the application, follow Database/README.txt. On the existing
+   database, inspect with 005, add missing 003 objects, provision insurance objects
+   with 004 only if absent, and apply REQUIRED 006 for insurance retry protection.
+   Do not run 001/002 on an existing database. They are for new installations.
+   The existing patient verification procedure must remain your DBA's version.
+4. Configure the following values securely for the IIS application. ASP.NET Core
+   environment variables override appsettings.json. The double underscore in
+   ConnectionStrings__ChatDb is intentional. Do not put secrets in WordPress,
+   JavaScript, source control or screenshots.
+
+   ASPNETCORE_ENVIRONMENT = Staging
+   APP_ENV = staging
+   PUBLIC_ORIGIN = https://sandbox.medicount.com
+   PARENT_ORIGINS = https://medicounttest.wpenginepowered.com
+   AllowedHosts = sandbox.medicount.com;localhost;127.0.0.1
+   STORE = sql
+   ACCOUNT_HASH_SECRET = a protected, persistent random secret of at least 32 chars
+   ConnectionStrings__ChatDb = the reviewed connection string below
+
+   SQL authentication example (replace placeholders securely on the server):
+   Server=tcp:SQL-FQDN,1433;Database=YOUR_DATABASE;User ID=REPLACE_SQL_USER;
+   Password=REPLACE_SQL_PASSWORD;Encrypt=True;TrustServerCertificate=False;
+   Connect Timeout=15;
+
+   Windows authentication example:
+   Server=tcp:SQL-FQDN,1433;Database=YOUR_DATABASE;Integrated Security=True;
+   Encrypt=True;TrustServerCertificate=False;Connect Timeout=15;
+
+   Windows authentication uses the IIS worker identity, not your interactive
+   developer login. Configure the appropriate domain service identity and SQL
+   permissions. With SQL authentication, use a dedicated application login.
+   Use a server name matching the SQL certificate and a trusted certificate chain.
+   The application preserves explicit TLS settings in a full ChatDb string;
+   it does not silently disable encryption or certificate validation.
+   Connect timeouts are bounded to 15 seconds and SQL commands to 30 seconds.
+
+   Remove obsolete SQL_* settings after migrating to ChatDb, to avoid ambiguity.
+   Keep ACCOUNT_HASH_SECRET stable across app-pool recycles. Do not use APP_ENV=
+   production: the original application's production-release gate is retained.
+5. Confirm from the IIS server that the SQL hostname resolves, the actual SQL TCP
+   port is reachable, TLS works, and the application login can execute
+   dbo.usp_VerifyPatientIdentity and access the chatbot tables. For example:
+     Test-NetConnection -ComputerName YOUR_SQL_FQDN -Port 1433
+   This tests TCP only, not authentication, TLS or procedure permissions. Use the
+   actual configured port. Run diagnostic 005 as the actual database user too.
+6. Stop the application pool or use your normal app_offline.htm deployment
+   procedure, copy the publish contents, preserve protected server settings,
+   remove app_offline.htm when complete, and start/recycle the pool. Do not simply
+   copy a .cs file over the old published DLLs. Use the complete rebuilt package.
+7. Embed this script on the WordPress page and purge the site's script/CDN cache:
+   <script src="https://sandbox.medicount.com/medicount-chat.js" defer></script>
+   For an IIS subapplication, include its path before medicount-chat.js. Asset and
+   API URLs now retain that path. PUBLIC_ORIGIN and PARENT_ORIGINS are origins only:
+   scheme + host + optional port, without path or trailing slash.
+8. Use HTTPS for both WordPress and the chatbot. Confirm that the site's CSP also
+   permits loading the chatbot script/styles and embedding its iframe. The chatbot
+   response permits its configured parent site and its own preview page.
+
+Billing and email are separate integrations
+At inspection time, https://sandbox.medicount.com/api/status returned
+billing=not_configured and email=not_configured. Identity verification now uses
+SQL directly and does not require a billing HTTP self-call. However, balances,
+claims, statements and placement refresh use the separate IBillingGateway bridge.
+They will show an honest service message until that bridge is configured. No
+private billing contract, API endpoint or credential was invented in this fix.
+
+For the existing live bridge, configure BILLING_MODE=live,
+BILLING_API_CONTRACT=medicount-chat-v1, BILLING_API_BASE_URL and BILLING_API_TOKEN
+after validating its real contract. See Services/BillingGateway.cs.
+Email defaults to disabled. Configure the existing SMTP or Graph transport and
+approved destinations before expecting notifications/callback requests by email.
+Do not describe saved requests as delivered until the transport accepts them.
+
+Required IIS acceptance test
+- /healthz returns 200. This is liveness only, not proof of SQL readiness.
+- Open the widget on the actual WordPress page; complete synthetic prechat data.
+- Use a DBA-provided synthetic patient: valid name + DOB + account verifies.
+- Change each field separately: no-match response without account disclosure.
+- Three mismatches cause lockout; SQL outage does not consume mismatch attempts.
+- Restore SQL and start verification from the main menu again.
+- Verify that balance/statement/claim/insurance continue to their selected flow.
+- Submit synthetic insurance once, then retry with the same form/request ID:
+  exactly one request is stored. Test two concurrent identical retries and a
+  forced rollback in staging. This transaction was not executed against live SQL
+  here. Retain deduplication keys at least as long as their chat sessions.
+- Check callback, email and billing acceptance using their actual services.
+- Confirm close, reopen, restart, Escape, Tab/Enter, mobile layout, review/edit,
+  session expiry and error recovery on the deployed page.
+
+Verification procedure contract
+The supplied ZIP contains no dbo.usp_VerifyPatientIdentity definition or clinical
+schema. Database/README.txt specifies its existing input/output contract. A DBA
+must verify that it matches all three identity fields and returns exactly one
+unique match. No patient records or patient matching schema were fabricated.
+
+Compatibility and operational limits
+- The widget uses bearer sessions and /api/form; it does not rely on third-party
+  cookies. The legacy /api/Patient endpoints retain their separate same-site,
+  HTTPS cookie session and are not the iframe workflow.
+- Legacy insurance callers may supply requestId (a nonempty GUID) and must reuse
+  it on retries. Without it they retain the old non-idempotent behavior.
+- The unused /api/verify-identity route that returned an empty success has been
+  removed. Use the stateful /api/form workflow, or the legacy patient controller.
+- Mail remains at-least-once if a provider accepts a message and the process or
+  database fails before recording acceptance. No exactly-once email guarantee.
+- Stored transcripts/forms and insurance keys need your existing retention and
+  access policies. No live data was modified or copied during this work.
+- Rotate the SQL and SMTP credentials exposed in the original archive.
+
+Build and repeat tests
+From the extracted source package root, with .NET 10 SDK:
+  dotnet build Medicount.Chatbot/Medicount.Chatbot.csproj -c Release
+  dotnet run --project regression-tests/Medicount.Chatbot.RegressionTests.csproj
+  dotnet publish Medicount.Chatbot/Medicount.Chatbot.csproj -c Release -o publish
+For browser tests, install Playwright in frontend-tests and its Chromium browser,
+or set PLAYWRIGHT_MODULE and EDGE_EXECUTABLE to local installed paths, then run:
+  node --test frontend-tests/widget.test.cjs
+Local runtime smoke scripts require an explicitly configured synthetic app:
+  node regression-tests/http-smoke.cjs
+  node frontend-tests/actual-app-smoke.cjs
+See TEST-RESULTS.txt for executed tests and their limitations.
+
+Official deployment/configuration references
+https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/?view=aspnetcore-10.0
+https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-10.0
+https://learn.microsoft.com/en-us/dotnet/core/install/windows
+

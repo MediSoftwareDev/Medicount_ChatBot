@@ -1,0 +1,11 @@
+# Visitor email confirmations
+
+Set `VISITOR_EMAIL_ENABLED=true` and configure the existing `EMAIL_TRANSPORT` as `smtp` or `graph`. Leave the flag off until your email sending and mailbox settings have been approved and tested. The flag defaults to false. Store credentials in protected deployment configuration. The source package includes sanitized configuration examples.
+
+Visitors can opt in on the contact form. The app queues one separate confirmation per saved chatbot request that uses the application email outbox, including insurance updates and itemized statement requests. Starting a chat, entering contact information, and reviewing a form do not send a confirmation. A submission still succeeds if the optional confirmation cannot be queued. Check the application diagnostics for the `conversation.visitor_confirmation` / `queue_failed` event.
+
+The recipient is the single email address entered and confirmed in the contact form. The app validates its syntax. The form confirmation does not establish mailbox ownership. The subject and plain-text body are fixed, and the visitor outbox payload is empty. Visitor messages have no CC, BCC, attachments, transcripts, request types, account references, or submitted form values. Staff notifications use the existing approved queues and their existing content. The existing outbox retries failed delivery independently of staff notifications. The SQL schema needs no change.
+
+Before enabling in staging, submit synthetic data with and without opting in, including a sensitive-looking string in a supported free-text field. Check the visitor inbox and staff queue separately. Confirm that the visitor message contains only the fixed text and that neither an unchecked opt-in nor a disabled transport generates external mail. Disable the visitor feature to block delivery of previously queued visitor confirmations as well as queueing new ones. Review retained outbox rows before re-enabling.
+
+Review staff mailbox access, email provider configuration and applicable agreements, delivery and retention controls, and deployment policy with your privacy and security teams. The visitor feature reduces disclosure by excluding submitted content. The running environment and staff workflow still require their own HIPAA review.
